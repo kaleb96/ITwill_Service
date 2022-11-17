@@ -1,0 +1,11 @@
+package com.itwillbs.test2.dao;
+
+import com.itwillbs.test2.vo.BoardVO;
+
+public class BoardDAO {
+
+	public void insert(BoardVO board) {
+		
+	}
+	
+}

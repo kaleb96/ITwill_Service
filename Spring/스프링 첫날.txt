@@ -1,0 +1,126 @@
+스프링 셋팅
+
+<IDE(Spring Tools) 다운로그 사이트>
+1. https://spring.io/ 접속
+
+스프링 프레임워크
+자바 플렛폼 구현을 위한 오픈 소스 프레임워크
+프레임워크? 프로그램을 구현하는데 필요한 
+기본은 자바, 동적 프레임 워크
+JSP없이도 동적인 서비스 구현 가능 
+스프링 프레임워크에서 동적인 웹 구현시에도 MVC(Spring)사용함
+기존의 동적인 웹어플리케이션 구현 시 훨씬 압축된 코드를 사용하여 간편하게 구현 가넝
+대한민국 정부 관련 프로젝트를 진행하는 기업에서 주로 사용하는 전자정부 표준 프레임워크의 기반이 되는 프레임워크
+
+스프링 프레임워크 사용 방법
+1. 이클립스 상에서 스프링 관연 에드온을 설치
+2. 이클립스 기반으로 제작한 IDE(Spring Tools) 설치 -> 수업시간에 사용할 방법
+
+API의 큰 개념
+
+Project -> Spring Tools4(최신버전이지만, 유지보수 비용이 많이 들기때문에 구버전으로 사용할거임) -> 공유폴더에 있는 스프링툴스4 다운받기 -> 이클립스 있는 폴더내에 압축풀기 -> 에드온설치(help에서 할거)
+헬프-마켓플레이스-검색창-Spring검색 - 스프링에드온(두번째 꺼) - install
+헬프-마켓플레이스-검색창-web developer - 두번째 이름긴거 - install - 라이센스 동의 후 피니쉬
+
+
+원도우즈-프리퍼렌스-자바-컴파일 1.8로 변경 인스톨드 jre->이클립스에서 사용하는 jre로 변경 
+
+
+스프링세팅 - 이클립스 세팅과 동일
+처음 파일 생성 후 오류 나 있을텐데 세팅 완료 후 오류없어짐
+
+서버에 톰캣9.0 연결 시키기 -> 포트번호 8005 집어 넣고 Run As
+
+
+
+=========================================================================
+
+컨트롤러 + 액션의 역할을 같이 함 -> 바로 서비스로 넘어감 
+웹 서블릿 어노테이션없어지는 대신에 다른거 
+
+
+return "home"; -> home.jsp를 가르킴 (/) 루트요청을 받아서 home.jsp를 여는 것 (http://localhost:8080/test/)
+
+
+pom.xml 파일 내 
+		<!-- Servlet -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>2.5</version>
+			<scope>provided</scope>
+		</dependency>
+ 
+코드가 있으면 서블릿을 따로 생성하지 않아도 자동으로 생성됨
+mysqlconnect 와 같은 코드
+
+
+
+web.xml 파일 내
+
+	<servlet>
+		<servlet-name>appServlet</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>/WEB-INF/spring/appServlet/servlet-context.xml</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+
+
+
+스프링에서 컨트롤러는 클래스 선언부 위에 @Cotroller 어노테이션을 지정하여 선언
+
+서블릿 매핑 작업 수행
+value = "/" => 매핑할 주소 적어.
+
+
+home cotroller(컨트롤러 + 액션)에서 매서드 단위로 주소를 쪼갬 = 프론트컨트롤러를 여러개 만들 필요가 없어짐ㅋ
+
+리쿼스트매서드 => 요청 방식을 구분 doGet(), doPost() 방식. 이거 안 맞으면 호출이 안됨. 오류가 날거임. 
+
+
+일치되는 주소가 요청이 매핑 되서 주소가 매칭이됨
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

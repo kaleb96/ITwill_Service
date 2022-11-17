@@ -1,0 +1,29 @@
+CREATE TABLE test8_1 (
+	name VARCHAR(10) UNIQUE,
+	age INT,
+	gender CHAR(1),
+	hobby VARCHAR(10)
+);
+
+
+
+
+CREATE TABLE test8_2 (
+	name VARCHAR(12) NOT NULL,
+	id VARCHAR(16) UNIQUE NOT NULL,
+	passwd VARCHAR(16) NOT NULL,
+	jumin VARCHAR(14) UNIQUE NOT NULL,
+	email VARCHAR(50) UNIQUE NOT NULL,
+	job VARCHAR(10) NOT NULL,
+	gender CHAR(1) NOT NULL,
+	hobby VARCHAR(10) NOT NULL,
+	content VARCHAR(2000) NOT NULL
+);
+
+주민번호 : xxxxxx-yyyyyyy
+이메일 : xxxx@yyyy.zzz
+
+
+
+
+

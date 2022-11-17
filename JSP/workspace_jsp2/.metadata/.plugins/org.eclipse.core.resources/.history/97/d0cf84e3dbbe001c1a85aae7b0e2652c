@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+	class A {
+		name = "홍길동";
+		
+		say() {
+			alert(name);
+		}
+	}
+</script>
+</head>
+<body>
+
+</body>
+</html>

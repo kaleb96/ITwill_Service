@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+	var name = prompt("좋아하는 연예인의 이름 입력");
+	alert(name);
+</script>
+</head>
+<body>
+
+</body>
+</html>

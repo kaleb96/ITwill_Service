@@ -1,0 +1,259 @@
+1. BoardDAO
+
+package board;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import db.JdbcUtil;
+
+public class BoardDAO
+	
+	// 게시물 등록 작업 수행을 위한 insertBoard() 메서드 정의
+	// => 파라미터 : BoardDTO 객체(board), 리턴타입 : int(insertCount)
+	public int insertBoard(BoardDTO board) {
+		int insertCount = 0;
+		
+		PreparedStatement pstmt = null, pstmt2 = null;
+		ResultSet rs = null;
+		
+		// 1단계 & 2단계
+		Connection con = JdbcUtil.getConnection();
+
+		try {
+			// --------------------------------------------------------------------------------------
+			// 새 글 작성 시 부여할 새 글의 번호 계산
+			int idx = 1; // 기본값으로 새 글 번호를 1번으로 지정
+			
+			// 3단계
+			// 기존 게시물에서 가장 큰 번호(idx)를 조회하여 있을 경우 조회결과 + 1 값이 새 글 번호
+			String sql = "SELECT MAX(idx) FROM board";
+			pstmt = con.prepareStatement(sql);
+			
+			// 4단계
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) { // 조회결과가 있을 경우(= 기존 게시물이 존재할 경우)
+				idx = rs.getInt(1) + 1; // 기존 번호 중 가장 큰 번호(= 조회 결과) + 1
+			}
+//			System.out.println("새 글 번호 : " + idx);
+			// --------------------------------------------------------------------------------------
+			// 전달받은 게시물 정보(새 글) board 테이블에 추가
+			// => 새 글 번호는 위에서 생성한 idx 변수값 활용(? 파라미터 추가 필요)
+			sql = "INSERT INTO board VALUES (?,?,?,?,?,now(),0)";
+			pstmt2 = con.prepareStatement(sql);
+			pstmt2.setInt(1, idx);
+			pstmt2.setString(2, board.getName());
+			pstmt2.setString(3, board.getPass());
+			pstmt2.setString(4, board.getSubject());
+			pstmt2.setString(5, board.getContent());
+			
+			insertCount = pstmt2.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("SQL 구문 오류 발생! - " + e.getMessage());
+		} finally {
+			JdbcUtil.close(rs);
+			JdbcUtil.close(pstmt);
+			JdbcUtil.close(pstmt2);
+			JdbcUtil.close(con);
+		}
+		
+		return insertCount;
+	}
+	
+	// 전체 게시물 수 조회를 수행하는 selectListCount() 메서드 정의
+	// => 파라미터 : 없음, 리턴타입 : int(listCount)
+	public int selectListCount() {
+		int listCount = 0;
+		
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		Connection con = JdbcUtil.getConnection();
+		
+		try {
+			// 3단계
+			String sql = "SELECT COUNT(*) FROM board";
+			pstmt = con.prepareStatement(sql);
+			
+			// 4단계
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				listCount = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("SQL 구문 오류 발생! - " + e.getMessage());
+		} finally {
+			JdbcUtil.close(rs);
+			JdbcUtil.close(pstmt);
+			JdbcUtil.close(con);
+		}
+		
+		return listCount;
+	}
+	
+	// 게시물 목록을 조회하는 selectBoardList() 메서드 정의
+	// => 파라미터 : 현재 페이지 번호, 페이지 당 게시물 수
+	// => 리턴타입 : List(ArrayList 객체)
+	public List selectBoardList(int pageNum, int listLimit) {
+		List boardList = null;
+		
+		// 현재 페이지 번호를 활용하여 조회 시 시작행 번호 계산
+		int startRow = (pageNum - 1) * listLimit;
+		
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		Connection con = JdbcUtil.getConnection();
+		
+		try {
+			String sql = "SELECT * FROM board ORDER BY idx DESC LIMIT ?,?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, listLimit);
+			
+			rs = pstmt.executeQuery();
+			
+			// 전체 게시물 목록을 저장할 List(ArrayList) 객체 생성
+			boardList = new ArrayList(); // ArrayList -> List 업캐스팅
+			
+			while(rs.next()) {
+				// 1개 게시물(레코드)을 저장할 BoardDTO 객체 생성
+				BoardDTO board = new BoardDTO();
+				board.setIdx(rs.getInt("idx"));
+				board.setName(rs.getString("name"));
+				board.setPass(rs.getString("pass"));
+				board.setSubject(rs.getString("subject"));
+				board.setContent(rs.getString("content"));
+				board.setDate(rs.getDate("date"));
+				board.setReadcount(rs.getInt("readcount"));
+				
+				// 1개 게시물을 다시 전체 게시물 저장 객체(boardList)에 추가
+				boardList.add(board);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("SQL 구문 오류 발생! - selectBoardList() : " + e.getMessage());
+		}
+		
+		return boardList;
+	}
+		
+	// 게시물 1개 정보 조회를 수행하는 selectBoard() 메서드 정의
+	// => 파라미터 : 글번호(idx), 리턴타입 : BoardDTO(board)	
+	public BoardDTO selectBoard(int idx) {
+		BoardDTO board = null;
+		
+		PreparedStatement pstmt = null, pstmt2 = null;
+		ResultSet rs = null;
+		
+		Connection con = JdbcUtil.getConnection();
+		
+		try {
+			String sql = "SELECT * FROM board WHERE idx=?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, idx);
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				// 1개 게시물(레코드)을 저장할 BoardDTO 객체 생성
+				board = new BoardDTO();
+				board.setIdx(rs.getInt("idx"));
+				board.setName(rs.getString("name"));
+				board.setPass(rs.getString("pass"));
+				board.setSubject(rs.getString("subject"));
+				board.setContent(rs.getString("content"));
+				board.setDate(rs.getDate("date"));
+				board.setReadcount(rs.getInt("readcount"));
+			}
+			
+			sql = "SELECT pass FROM board WHERE idx=?";
+			 pstmt2 = con.prepareStatement(sql);
+			 pstmt2.setInt(1, board.getIdx());
+			 
+			 ResultSet rs1 = pstmt2.executeQuery();
+			 if(rs.next()) {
+				 if(board.getPass().equals(rs.getString("pass"))) {
+					 sql = "UPDATE board SET name=?, subject=?, content=? WHERE idx=?";
+					 pstmt2 = con.prepareStatement(sql);
+					 pstmt2.setString(1, board.getName());
+					 pstmt2.setString(2, board.getSubject());
+					 pstmt2.setString(3, board.getContent());
+					 pstmt2.setInt(4, board.getIdx());
+					 
+					 int rs2 = pstmt2.executeUpdate();
+				 }
+			 }
+			 
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("SQL 구문 오류 발생! - selectBoard() : " + e.getMessage());
+		} finally {
+			JdbcUtil.close(rs);
+			JdbcUtil.close(pstmt);
+			JdbcUtil.close(pstmt2);
+			JdbcUtil.close(con);
+		}
+		
+		return board;
+	}
+	
+	public int deleteCount(BoardDTO board) {
+		int deleteCount = 0;
+		
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		Connection con = JdbcUtil.getConnection();
+		
+		try {
+			String sql = "DELETE FROM board WHERE idx=? AND pass=?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, board.getIdx());
+			pstmt.setString(2, board.getPass());
+			
+			deleteCount = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("SQL 구문 오류 발생! - " + e.getMessage());
+		} finally {
+			JdbcUtil.close(pstmt);
+			JdbcUtil.close(con);
+			
+		}
+			return deleteCount;
+	}
+	
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

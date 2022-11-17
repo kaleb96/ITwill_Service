@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+	class Person {
+		constructor(name) {
+			this.name = name;
+		}
+		
+		say() {
+			alert(name);
+		}
+	}
+	
+	let a = new Person();
+	a.say();
+</script>
+</head>
+<body>
+
+</body>
+</html>

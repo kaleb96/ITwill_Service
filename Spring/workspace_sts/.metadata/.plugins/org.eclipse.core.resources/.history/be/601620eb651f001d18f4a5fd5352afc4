@@ -1,0 +1,173 @@
+package com.itwillbs.test2.controller;
+
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.itwillbs.test2.vo.TestVO;
+
+@Controller
+public class TestController {
+	
+	// "/main" URL 요청 시 /WEB-INF/views/main.jsp 페이지 포워딩(GET 방식)
+//	@RequestMapping(value = "/main", method = RequestMethod.GET)
+//	public String main() {
+//		System.out.println("main() 메서드");
+//		return "main";
+//	}
+	
+	// "/main" URL 요청 시 /WEB-INF/views/main.jsp 페이지 포워딩(GET 방식)
+	// => URL 파라미터에 데이터 전송 시 메서드 파라미터의 변수명과 URL 파라미터명이 일치하면
+	//    자동으로 해당 파라미터 값을 가져와서 파라미터 변수에 저장
+	// ex) http://localhost:8080/test2/main?id=admin&name=홍길동
+	@RequestMapping(value = "/main", method = RequestMethod.GET)
+	public String main(String id, String name) { // id 와 name 파라미터값 자동으로 저장됨
+		System.out.println("main(String) 메서드");
+		System.out.println("아이디 = " + id + ", 이름 = " + name);
+		return "main";
+	}
+	
+	// ------------------------------------------------------------
+//	@RequestMapping(value = "/push", method = RequestMethod.GET)
+//	public String push() { 
+//		return "push_data";
+//	}
+	
+	// "/push" 서블릿 주소 요청 시 HttpServletRequest 객체를 자동으로 전달받기(= 자동 주입)
+	// => 호출될 메서드 정의 시 메서드 파라미터로 HttpServletRequest 타입 변수 선언
+//	@RequestMapping(value = "/push", method = RequestMethod.GET)
+//	public String push(HttpServletRequest request) { 
+//		// HttpServletRequest 객체의 setAttribute() 메서드를 호출하여 객체(데이터) 저장 가능
+//		// => "msg" 라는 속성명으로 "Hello, World!" 문자열 저장
+//		request.setAttribute("msg", "Hello, World!");
+//		
+//		// request 객체는 Dispatcher 방식으로 포워딩 시 그대로 유지됨(저장 데이터도 유지됨)
+//		return "push_data"; // "/WEB-INF/views/push_data.jsp" 페이지로 포워딩(Dispatcher 방식)
+//	}
+	
+	// HttpServletRequest 객체 대신 org.springframework.ui.Model 타입을 파라미터로 지정 시
+	// 데이터 저장이 가능한 스프링 전용 데이터 공유 객체를 자동으로 주입받을 수 있음
+	// => request 객체와 성격이 거의 유사하며, java.util.Map 객체를 기반으로 생성한
+	//    스프링에서 제공하는 데이터 공유 객체
+	@RequestMapping(value = "/push", method = RequestMethod.GET)
+	public String push(Model model) {
+		// request.setAttribute() 메서드와 마찬가지로 Model 객체의 addAttribute() 로 데이터 저장
+		// request 객체와 범위(Scope) 동일
+		// 단, Model 객체와 HttpServletRequest 객체 동시 사용 불가
+		// (일반적인 데이터 저장 시 request 객체보다 더 많이 사용됨)
+		model.addAttribute("msg", "Hello, World! - Model 객체");
+		
+		return "push_data"; // "/WEB-INF/views/push_data.jsp" 페이지로 포워딩(Dispatcher 방식)
+	}
+	
+	// ----------------------------------------------------------------------------
+	@RequestMapping(value = "/redirect", method = RequestMethod.GET)
+	public String redirect() throws UnsupportedEncodingException {
+//		return "redirect"; // "/WEB-INF/views/redirect.jsp" 페이지로 포워딩(Dispatcher 방식)
+		
+		// 리다이렉트 방식 포워딩 시 return "redirect:/포워딩 할 주소" 형식으로 지정
+		// ex) return "redirect:/dispatcher"; // 주소표시줄의 요청 주소가 dispatcher 로 변경됨
+//		return "redirect:/dispatcher";
+		
+		// 리다이렉트 방식 포워딩 테스트를 위한 URL 파라미터 전달
+//		String name = "hong";
+//		String name = "홍길동"; 
+		int age = 20;
+		
+		// 주의! URL 을 통해 한글, 한자 등 파라미터 전달 시 깨짐 
+		// => 따라서, java.net.URLEncoder 클래스의 encode() 메서드를 호출하여 데이터 인코딩 필요
+		// => "UTF-8" 등의 인코딩 타입이 지원되지 않을 경우 UnsuppotedEncodingException 발생
+		String name = URLEncoder.encode("홍길동", "UTF-8"); // 문자열을 UTF-8 형식으로 인코딩
+		
+//		return "redirect:/dispatcher?name=" + name + "&age=" + age;
+		// http://localhost:8080/test2/dispatcher?name=%ED%99%8D%EA%B8%B8%EB%8F%99&age=20
+		// => "홍길동" 이라는 문자열이 인코딩되어 %ED%99%8D%EA%B8%B8%EB%8F%99 로 나타남
+		//    (단, 웹브라우저 주소 표시줄에는 정상적으로 한글이 표시될 수 있음)
+		
+		
+		// dispatcher() 메서드에서 @RequestParam 어노테이션 테스트용(age 파라미터 삭제)
+		return "redirect:/dispatcher?name=" + name;
+	}
+	
+//	// 리다이렉트 방식 요청 처리 수행을 위해 디스패쳐 방식을 사용한 redirect.jsp 페이지 포워딩
+//	@RequestMapping(value = "/dispatcher", method = RequestMethod.GET)
+//	public String dispatcher() {
+//		return "redirect"; // "/WEB-INF/views/redirect.jsp" 페이지로 포워딩(Dispatcher 방식)
+//		// => URL 에 표시된 주소 : http://localhost:8080/test2/dispatcher(이전 요청 주소)
+//	}
+	
+	// 리다이렉트 방식 요청에서 전달받은 URL 파라미터를 가져오기 위해
+	// dispatcher() 메서드 정의 시 파라미터로 동일한 이름의 변수 선언 필요
+	// => 변수 타입에 따라 자동 파싱까지 지원됨
+//	@RequestMapping(value = "/dispatcher", method = RequestMethod.GET)
+//	public String dispatcher(String name, int age) throws UnsupportedEncodingException {
+//		System.out.println("이름 : " + name);
+//		System.out.println("나이 : " + age);
+//		
+//		// 인코딩 된 데이터를 다시 원래 형태로 되돌려야할 경우 디코딩 작업 필요
+//		// => 단, 현재 저장된 파라미터를 메서드 내에서 바로 사용하거나
+//		//    Model 객체에 저장 시에는 디코딩 불필요
+//		// => URLDecoder 클래스의 decode() 메서드를 호출하여 디코딩 수행
+////		String decodedName = URLDecoder.decode(name, "UTF-8");
+////		System.out.println(name + ", " + decodedName);
+//		
+//		return "redirect"; // "/WEB-INF/views/redirect.jsp" 페이지로 포워딩(Dispatcher 방식)
+//	}
+	
+	// 메서드 정의 시 @RequestParam 어노테이션을 사용하여
+	// 파라미터 변수 선언 시점에 파라미터 데이터라는 표시를 명확하게 지정 가능하며
+	// 기본값을 설정할 수도 있다!
+	// => @RequestParam 어노테이션에 defaultValue 속성을 추가하여 기본값 설정 가능
+	// ex) @RequestParam(defaultValue = "기본값") 변수선언
+	@RequestMapping(value = "/dispatcher", method = RequestMethod.GET)
+	public String dispatcher(Model model, @RequestParam String name, @RequestParam(defaultValue = "0") int age) throws UnsupportedEncodingException {
+		System.out.println("이름 : " + name);
+		System.out.println("나이 : " + age); // age 파라미터 없으면 콘솔에 0 출력됨
+		
+		// 만약, age 파라미터를 URL 에 전달하지 않은 채로
+		// 기본값으로 적용된 age 값을 redirect.jsp 페이지까지 사용하기 위해서는
+		// Model 객체를 사용하여 저장 후 포워딩 수행 가능
+		// => dispatcher() 메서드 파라미터로 Model 타입 변수 선언 필수!
+		model.addAttribute("name2", name);
+		model.addAttribute("age2", age);
+		
+		return "redirect"; // "/WEB-INF/views/redirect.jsp" 페이지로 포워딩(Dispatcher 방식)
+	}
+	
+	// ModelAndView : 데이터를 저장하는 Model 객체 관리와 View 페이지 포워딩을 함께 수행하는 객체
+	// => 메서드 정의 시 리턴타입을 ModelAndView 타입으로 설정
+	@RequestMapping(value = "/mav", method = RequestMethod.GET)
+	public ModelAndView modelAndView() {
+		// ModelAndView 객체 사용 시 데이터 저장에 필요한 객체는 HashMap 객체 활용
+		Map<String, TestVO> map = new HashMap<String, TestVO>();
+		
+		return "redirect";
+	}
+	
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

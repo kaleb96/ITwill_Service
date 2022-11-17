@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+	/*
+	[ 페이지 이동 관련 객체 ]
+	- window.location 객체(주로, window 객체명은 생략하고 location 으로 사용)
+	- location 객체의 href 속성이 웹브라우저 주소 정보 관리
+	- 페이지 이동 방법
+	  location.href = "이동할 URL 또는 파일명";
+	*/
+	function func1() {
+		
+	}
+
+	function func2() {
+		
+	}
+
+	function func3() {
+		
+	}
+</script>
+</head>
+<body>
+	<h1>test21.html</h1>
+	<input type="button" value="주소 정보 출력" onclick="func1()">
+	<input type="button" value="주소 정보 변경" onclick="func2()">
+	<input type="button" value="주소 새로 고침" onclick="func3()">
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

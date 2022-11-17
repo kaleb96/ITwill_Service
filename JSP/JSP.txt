@@ -1,0 +1,28 @@
+이연태(ytlee@itwillbs.co.kr)
+웹프로그래밍
+
+1. 웹 기초 이론
+2. HTML
+3. Javascript
+4. JSP
+5. Spring Framework
+
+=> 백엔드 프로그래밍
+   (서버상에서 데이터 처리 과정)
+
+
+eclipse.org
+IDE(Integerated Development Environment, 통합 개발 환경)
+=> 프로그램 작성, 저장, 번역, 실행, 디버깅 등의 작업을
+   하나의 도구로 종합적으로 제공하는 소프트웨어(= 프로그램)
+=> Microsoft - Visual Studio
+   Eclipse Foundation - Eclipse
+
+tomcat.apache.org
+정보요청자(Client) - 정보제공자(Server)
+=> Server 들 중 웹 서비스를 제공하는 서버를 웹서버라고 함
+=> 대표적인 웹 어플리케이션 서버 : Apache Tomcat, Oracle Web Logic
+=> 톰캣을 컴퓨터에 설치할 경우 해당 컴퓨터는 클라이언트이자 서버 역할 동시 수행
+
+
+

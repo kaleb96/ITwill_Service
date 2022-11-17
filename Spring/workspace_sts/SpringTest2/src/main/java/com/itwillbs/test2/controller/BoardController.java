@@ -1,0 +1,90 @@
+package com.itwillbs.test2.controller;
+
+import java.util.ArrayList;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+import com.itwillbs.test2.dao.BoardDAO;
+import com.itwillbs.test2.vo.BoardVO;
+import com.itwillbs.test2.vo.TestVO;
+
+@Controller
+public class BoardController {
+	
+	@RequestMapping(value = "/write.bo", method = RequestMethod.GET)
+	public String write() {
+		return "write_form";
+	}
+	
+	// write_form.jsp 페이지에서 POST 방식 요청 수행 시 처리
+	// => 요청 주소가 위의 주소와 동일하나 요청 방식(메서드)이 다르게 매핑됨
+	// => 만약, 메서드명도 동일하게 정의하는 경우 오버로딩 활용
+//	@RequestMapping(value = "/write.bo", method = RequestMethod.POST)
+//	public String write(String name, String passwd, String subject, String content) {
+//		// 주의! POST 방식 요청에 대한 처리 시 한글 파라미터가 깨짐
+//		// => JSP 에서는 request.setCharacterEncoding("UTF-8") 메서드를 통해 인코딩 처리했으나
+//		//    스프링에서는 자동 주입되는 시점에 한글이 이미 깨져있는 상태가 됨
+//		// => 따라서, web.xml 파일에서 POST 방식 요청에 대한 인코딩 필터 설정을 해야함
+//		System.out.println("이름 : " + name);
+//		System.out.println("패스워드 : " + passwd);
+//		System.out.println("제목 : " + subject);
+//		System.out.println("내용 : " + content);
+//		
+//		// "list.bo" 서블릿 요청 => 리다이렉트 방식으로 요청
+//		return "redirect:/list.bo";
+//	}
+	
+	// write_form.jsp 페이지로부터 요청받은 폼 파라미터 데이터를 가져올 때
+	// 폼 파라미터명과 메서드 파라미터 변수명이 동일하면 자동으로 데이터가 주입됨
+	// => 변수 대신 변수들을 갖고 있는 VO 클래스를 명시해도 자동으로 데이터가 주입됨
+	// => 메서드 정의 시 파라미터 부분에 VO 클래스를 선언
+	@RequestMapping(value = "/write.bo", method = RequestMethod.POST)
+	public String write(BoardVO board) {
+		System.out.println("이름 : " + board.getName());
+		System.out.println("패스워드 : " + board.getPasswd());
+		System.out.println("제목 : " + board.getSubject());
+		System.out.println("내용 : " + board.getContent());
+		
+		// 실제 study_jsp2 데이터베이스의 board 테이블에 데이터 추가를 위한 BoardDAO 객체 생성
+		BoardDAO dao = new BoardDAO();
+		// BoardDAO 객체의 insert() 메서드를 호출하여 글쓰기 작업 수행
+		// => 파라미터 : BoardVO 객체    리턴타입 : void
+		dao.insert(board);
+		
+		// "list.bo" 서블릿 요청 => 리다이렉트 방식으로 요청
+		return "redirect:/list.bo";
+	}
+	
+	
+	// list.bo 서블릿 요청에 대해 list.jsp 페이지로 포워딩 작업을 수행하는 list() 메서드 정의
+	// => GET 방식 요청, Dispatcher 방식 포워딩
+	@RequestMapping(value = "/list.bo", method = RequestMethod.GET)
+	public String list(Model model) { // 데이터 저장에 사용될 Model 파라미터 설정
+		// 데이터베이스 글목록 조회 작업 생략하고 조회 결과물을 ArrayList 객체에 저장
+		// 1. 전체 글목록을 저장할 ArrayList 객체 생성(제네릭 타입 BoardVO 지정)
+		ArrayList<BoardVO> boardList = new ArrayList<BoardVO>();
+		
+		// 2. 1개 게시물 정보를 저장하는 BoardVO 객체 생성하여 데이터 저장 및 ArrayList 에 추가
+		boardList.add(new BoardVO("홍길동", "1234", "홍길동-제목", "홍길동-내용"));
+		boardList.add(new BoardVO("이순신", "1234", "이순신-제목", "이순신-내용"));
+		
+		// 3. 뷰페이지로 포워딩 시 함께 전달할 데이터를 Model 객체에 저장
+		model.addAttribute("boardList", boardList);
+		
+		return "list";
+	}
+	
+}
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,117 @@
+1. notice_update
+
+<%@page import="board.BoardDTO"%>
+<%@page import="org.omg.CORBA.BAD_INV_ORDER"%>
+<%@page import="board.BoardDAO"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%
+int idx = Integer.parseInt(request.getParameter("idx")); 
+String pageNum = request.getParameter("pageNum");
+
+BoardDAO dao = new BoardDAO();
+BoardDTO board = dao.selectBoard(idx);
+%>	
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>center/notice_update.jsp</title>
+<link href="../css/default.css" rel="stylesheet" type="text/css">
+<link href="../css/subpage.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+	<div id="wrap">
+		<!-- 헤더 들어가는곳 -->
+		<jsp:include page="../inc/top.jsp" />
+		<!-- 헤더 들어가는곳 -->
+
+		<!-- 본문들어가는 곳 -->
+		<!-- 본문 메인 이미지 -->
+		<div id="sub_img_center"></div>
+		<!-- 왼쪽 메뉴 -->
+		<nav id="sub_menu">
+			<ul>
+				<li><a href="./notice.jsp">Notice</a></li>
+				<li><a href="#">Public News</a></li>
+				<li><a href="./driver.jsp">Driver Download</a></li>
+				<li><a href="#">Service Policy</a></li>
+			</ul>
+		</nav>
+		<!-- 본문 내용 -->
+		<article>
+			<h1>Notice Update</h1>
+			<form action="notice_updatePro.jsp" method="post">
+				<table id="notice">
+					<tr>
+						<td>글쓴이</td>
+						<td><%=board.getName() %></td>
+						<td><input type="text" name="name" required="required"></td>
+					</tr>
+					<tr>
+						<td>비밀번호</td>
+						<td><%=board.getPass() %></td>
+						<td><input type="text" name="pass" required="required"></td>
+					</tr>
+					<tr>
+						<td>제목</td>
+						<td><%=board.getSubject() %></td>
+						<td><input type="text" name="subject" required="required"></td>
+					</tr>
+					<tr>
+						<td>내용</td>
+						<td><%=board.getContent() %></td>
+						<td><textarea rows="10" cols="20" name="content" required="required"></textarea></td>
+					</tr>
+				</table>
+
+				<div id="table_search">
+					<input type="submit" value="글수정" class="btn">
+				</div>
+			</form>
+			<div class="clear"></div>
+		</article>
+
+
+		<div class="clear"></div>
+		<!-- 푸터 들어가는곳 -->
+		<jsp:include page="../inc/bottom.jsp" />
+		<!-- 푸터 들어가는곳 -->
+	</div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2. notice_updatePro
+
+<%@page import="board.BoardDAO"%>
+<%@page import="board.BoardDTO"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%
+request.setCharacterEncoding("UTF-8");
+
+BoardDTO board = new BoardDTO();
+board.setName(request.getParameter("name"));
+board.setPass(request.getParameter("pass"));
+board.setSubject(request.getParameter("subjent"));
+board.setContent(request.getParameter("content"));
+
+//번호를 사용하여 게시물 정보 조회 => BoardDAO 객체의 selectBoard() 메서드 재사용
+BoardDAO dao = new BoardDAO();
+BoardDTO dto = dao.selectBoard(idx);
+%>
+
+

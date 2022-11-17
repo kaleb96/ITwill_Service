@@ -1,0 +1,31 @@
+package com.itwillbs.test.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+@RequestMapping("/main")
+public class TestController3 {
+
+	public String test() {
+		System.out.println("test() 메서드 호출됨!");
+		return "";
+	}
+	
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

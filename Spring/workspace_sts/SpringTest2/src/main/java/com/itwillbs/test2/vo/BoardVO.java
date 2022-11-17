@@ -1,0 +1,50 @@
+package com.itwillbs.test2.vo;
+
+public class BoardVO {
+	// 데이터(객체) 자동 주입을 위해 멤버변수명을 전달받을 파라미터명과 동일하게 설정
+	private String name;
+	private String passwd;
+	private String subject;
+	private String content;
+	
+	// 반드시 기본 생성자가 존재해야한다!(생략 시 자동 정의됨)
+	public BoardVO() {
+		super();
+	}
+	
+	public BoardVO(String name, String passwd, String subject, String content) {
+		super();
+		this.name = name;
+		this.passwd = passwd;
+		this.subject = subject;
+		this.content = content;
+	}
+
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getPasswd() {
+		return passwd;
+	}
+	public void setPasswd(String passwd) {
+		this.passwd = passwd;
+	}
+	public String getSubject() {
+		return subject;
+	}
+	public void setSubject(String subject) {
+		this.subject = subject;
+	}
+	public String getContent() {
+		return content;
+	}
+	public void setContent(String content) {
+		this.content = content;
+	}
+	
+	
+	
+}

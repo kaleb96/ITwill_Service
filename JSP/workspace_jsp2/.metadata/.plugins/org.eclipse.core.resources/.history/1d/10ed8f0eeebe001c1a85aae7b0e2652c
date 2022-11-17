@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>document 객체 기초</title>
+<script type="text/javascript">
+	/*
+	window.document 객체
+	- HTML 문서 내용을 관리하는 객체
+	- 문서 정보 확인, 문서 내용 변경 등의 다양한 작업을 수행 가능
+	- 속성(변수) : document.title, document.bgColor, document.fgColor 등
+	  함수       : document.write(), document.getElementById() 등
+	*/
+	function func1() {
+		// document 객체의 title 속성을 통해 문서 제목(title 태그 내용) 확인
+		alert(document.title);
+	}
+
+	function func2() {
+		// document 객체의 title 속성값을 변경하면 웹브라우저(문서) 제목 변경 가능
+		document.title = "제목 변경";
+	}
+
+	function func3() {
+		// document 객체의 bgColor 속성값을 확인하면 문서의 배경색 확인
+		alert(document.bgColor);
+	}
+	
+	function func4() {
+		// document 객체의 bgColor 속성값을 변경하면 문서의 배경색 변경
+		document.bgColor = "RED";
+	}
+</script>
+</head>
+<body>
+	<h1>test23.html</h1>
+	<input type="button" value="문서 제목 출력" onclick="func1()">
+	<input type="button" value="문서 제목 변경" onclick="func2()">
+	<input type="button" value="문서 배경색 출력" onclick="func3()">
+	<input type="button" value="문서 배경색 변경" onclick="func4()">
+	<br>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

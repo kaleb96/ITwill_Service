@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!-- mapper 태그 내에 namespace 속성 지정 후 연결할 Mapper 인터페이스 위치 지정 -->
+<!-- 해당 인터페이스 타입의 객체가 생성되어 자동으로 관리되며 XML 파일과 연결되어 SQL 구문 실행 -->
+<mapper namespace="com.itwillbs.mvc_board.mapper.MemberMapper">
+	<!-- 
+	실행할 SQL 구문을 태그 형식으로 작성(CRUD 작업에 해당하는 태그가 제공됨)
+	태그 내의 id 속성에 지정할 이름은 namespace 에서 지정한 인터페이스 내의 메서드명과 동일해야함
+	해당 태그 사이에 실제 SQL 구문을 작성
+	=> 태그에 사용되는 만능문자 파라미터(?)는 #{파라미터명} 또는 ${파라미터명} 형태로 지정하며
+	   VO 객체의 변수명 활용하여 파라미터명을 지정
+	   (주로, 데이터에 해당하는 부분은 # 을 사용하여 테이블명, 컬럼명 등의 부분은 $ 를 사용)
+	-->
+	<insert id="insertMember">
+		INSERT INTO member
+		VALUES (#{name}, #{id}, #{passwd}, #{email}, #{post_code}, #{address1}, #{address2}, now())
+	</insert>
+	
+	<!-- 
+	2. 로그인 작업 수행을 위한 select 태그 작성
+	=> MemberMapper 객체의 selectLoginMember() 메서드명을 id 속성값으로 지정
+	=> 사용할 파라미터는 MemberVO 객체의 멤버변수명과 동일한 이름 지정
+	=> 단, SELECT 태그는 조회 결과를 저장할 객체의 타입을 resultType 속성을 통해 지정
+	   주로, VO 클래스명 지정(패키지명 포함)
+	-->
+	<select id="selectLoginMember" resultType="com.itwillbs.mvc_board.vo.MemberVO">
+		SELECT * FROM member
+		WHERE id=#{id} AND passwd=#{passwd}
+	</select>
+	
+	<!-- 3. 회원 상세정보 조회를 위한 select 태그 작성(MemberVO 타입 리턴) -->
+	<select id="selectMemberInfo" resultType="com.itwillbs.mvc_board.vo.MemberVO">
+		SELECT * FROM member
+		WHERE id=#{id}
+	</select>
+	
+	<!-- 4. 회원 목록 조회를 위한 select 태그 작성(MemberVO 타입 리턴) -->
+	<!-- 내부적으로 1개 레코드 정보를 각각 MemberVO 객체 생성을 통해 저장하고 -->
+	<!-- 다시 MemberVO 객체를 List<MemberVO> 객체를 통해 저장(추가) 작업을 자동화 -->
+	<select id="selectMemberList" resultType="com.itwillbs.mvc_board.vo.MemberVO">
+		SELECT * FROM member
+	</select>
+	
+	<!-- 5. 패스워드 암호화로 인한 암호화 패스워드 조회 -->
+	<select id="selectPasswd" resultType="com.itwillbs.mvc_board.vo.MemberVO">
+		SELECT id,passwd FROM member
+		WHERE id=#{id}
+	</select>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

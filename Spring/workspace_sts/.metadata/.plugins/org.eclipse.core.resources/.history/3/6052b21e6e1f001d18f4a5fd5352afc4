@@ -1,0 +1,14 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<jsp:include page="inc/top.jsp"></jsp:include>
+	<h1>list.jsp</h1>
+	<%-- JSTL 과 EL 을 사용하여 ArrayList("boardList") 객체에 저장된 BoardVO 객체 데이터 출력 --%>
+</body>
+</html>

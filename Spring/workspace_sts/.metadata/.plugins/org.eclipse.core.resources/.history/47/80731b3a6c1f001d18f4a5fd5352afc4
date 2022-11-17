@@ -1,0 +1,10 @@
+package com.itwillbs.test2.vo;
+
+public class BoardVO {
+	private String name;
+	private String passwd;
+	private String subject;
+	private String content;
+	
+	
+}

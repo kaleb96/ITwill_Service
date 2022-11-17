@@ -1,0 +1,31 @@
+package com.itwillbs.test2.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+@Controller
+public class BoardController {
+	
+	@RequestMapping(value = "/write.bo", method = RequestMethod.GET)
+	public String write() {
+		return "write_form";
+	}
+	
+	
+	@RequestMapping(value = "/write.bo", method = RequestMethod.POST)
+	public String write() {
+		return "write_form";
+	}
+	
+}
+
+
+
+
+
+
+
+
+
+

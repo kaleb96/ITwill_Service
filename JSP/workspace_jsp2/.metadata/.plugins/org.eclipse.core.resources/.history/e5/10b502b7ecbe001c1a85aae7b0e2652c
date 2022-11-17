@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+	/*
+	window.document 객체
+	- HTML 문서 내용을 관리하는 객체
+	- 문서 정보 확인, 문서 내용 변경 등의 다양한 작업을 수행 가능
+	- 속성(변수) : document.title, document.bgColor, document.fgColor 등
+	  함수       : document.write(), document.getElementById() 등
+	*/
+	function func1() {
+		
+	}
+
+	function func2() {
+		
+	}
+
+	function func3() {
+		
+	}
+</script>
+</head>
+<body>
+	<h1>test23.html</h1>
+	<input type="button" value="문서 제목 출력" onclick="func1()">
+	<input type="button" value="문서 제목 변경" onclick="func2()">
+	<input type="button" value="문서 배경색 출력" onclick="func3()">
+	<input type="button" value="문서 배경색 변경" onclick="func3()">
+	<br>
+	<!-- 1단계 이상 이동할 경우 history 객체의 go(단계) 함수 사용(양수는 앞으로, 음수는 뒤로 이동) -->
+	<input type="button" value="2단계 이전 페이지" onclick="history.go(-2)">
+	<input type="button" value="2단계 다음 페이지" onclick="history.go(2)">
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,6 @@
+/**
+ * test13.html 파일의 자바스크립트 함수 정의하는 곳
+ */
+function test() {
+	alert("확인");		
+}

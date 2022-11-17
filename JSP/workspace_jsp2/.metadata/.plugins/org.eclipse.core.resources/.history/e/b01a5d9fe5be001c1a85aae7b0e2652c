@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+	function func1() {
+		
+	}
+
+	function func2() {
+		
+	}
+
+	function func3() {
+		
+	}
+</script>
+</head>
+<body>
+	<h1>test21.html</h1>
+	<input type="button" value="주소 정보 출력" onclick="func1()">
+	<input type="button" value="주소 정보 변경" onclick="func2()">
+	<input type="button" value="주소 새로 고침" onclick="func3()">
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

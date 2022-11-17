@@ -1,0 +1,11 @@
+이클립스 
+MVC_Board -> 우클릭 -> Export -> WAR file -> 브라우저 ->
+MVC_Board D:드라이브에 붙여넣기 -> 새 파일탐색기 열기 ->
+톰캣이 저장된 programfile 클릭 후 - bin 클릭 ->
+Tomcat9w.exe 클릭 후 맨 아래 빼고 체크 start 누르기
+(그 전에 이미 이클립스 tomcat서버 stop눌러놓기! 8080충돌방지)
+-> 다시 webapps폴더 클릭 후 D:드라이브에 복붙해놨던 MVC_Board파일을
+POOT밑 빈 공간에 다시 복붙
+
+=> 이클립스 없이 Tomcat만으로 웹이 작동 가능
+

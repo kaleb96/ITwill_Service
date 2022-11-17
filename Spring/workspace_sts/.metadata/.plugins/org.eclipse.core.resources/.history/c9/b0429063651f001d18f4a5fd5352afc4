@@ -1,0 +1,6 @@
+package com.itwillbs.test2.vo;
+
+// VO(Value Object) = Bean = DTO
+public class TestVO {
+
+}

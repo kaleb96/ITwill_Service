@@ -1,0 +1,38 @@
+package com.itwillbs.test2.vo;
+
+public class BoardVO {
+	private String name;
+	private String passwd;
+	private String subject;
+	private String content;
+	
+	// 반드시 기본 생성자가 존재해야한다!(생략 시 자동 정의됨)
+	
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getPasswd() {
+		return passwd;
+	}
+	public void setPasswd(String passwd) {
+		this.passwd = passwd;
+	}
+	public String getSubject() {
+		return subject;
+	}
+	public void setSubject(String subject) {
+		this.subject = subject;
+	}
+	public String getContent() {
+		return content;
+	}
+	public void setContent(String content) {
+		this.content = content;
+	}
+	
+	
+	
+}

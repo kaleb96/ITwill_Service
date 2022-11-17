@@ -1,0 +1,25 @@
+
+public class Test4 {
+
+	public static void main(String[] args) {
+		System.out.println("아이티윌로 걸어서 출발!");
+		
+		// 제윤씨가 주운 돈 5000원을 int형 변수 money에 저장
+		int money = 5000;
+		
+		// if ~ else 문을 사용하여
+		// 돈이 5천원 이상 있을 경우 "택시타고 가기!" 출력
+		// 아니면 "버스 타고 가기" 출력
+		if(money >= 5000) {
+			System.out.println("택시타고 가기!");
+		} else {
+			System.out.println("버스타고 가기!");
+		}
+		
+		
+		System.out.println("아이티윌에 도착!");
+		
+		System.out.println("=================================");
+	}
+
+}

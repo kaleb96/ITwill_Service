@@ -1,0 +1,11 @@
+package com.itwillbs.test2.vo;
+
+public class BoardVO {
+	private String name;
+	private String passwd;
+	private String subject;
+	private String content;
+	
+	// 반드시 기본 생성자가 존재해야한다!
+	
+}

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+	/*
+	반복문을 활용한 배열 접근
+	- 주로 for문을 사용하여 배열에 차례대로 접근
+	
+	< 기본적인 for문을 사용한 배열 접근 >
+	*/
+	
+	// 배열 fruits 생성 및 "사과", "딸기", "오렌지" 저장 후 출력
+	let fruits = ["사과", "딸기", "오렌지"];
+	
+// 	document.write(fruits[0] + "<br>");
+// 	document.write(fruits[1] + "<br>");
+// 	document.write(fruits[2] + "<br>");
+	
+	// 일반 for문을 사용하여 fruits 배열의 0번 인덱스부터 끝(2)까지 차례대로 접근하여 데이터 출력
+	for(let i = 0; i <= 2; i++) {
+		// 제어변수 i값이 0 ~ 2 까지 1씩 증가하므로 배열의 인덱스에 제어변수 활용 가능함
+		document.write(fruits[i] + "<br>"); // i값이 배열 인덱스로 사용되어 0 ~ 2 까지 1씩 증가함
+	}
+	
+	document.write("<hr>");
+	
+	// 배열 nums 생성 및 10, 20, 30, 40, 50 저장 후 출력
+	let nums = [10, 20, 30, 40, 50];
+	for(let i = 0; i <= 4; i++) { // 0 ~ 4 까지 반복
+		document.write(fruits[i] + "<br>");
+	}
+	
+</script>
+</head>
+<body>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+

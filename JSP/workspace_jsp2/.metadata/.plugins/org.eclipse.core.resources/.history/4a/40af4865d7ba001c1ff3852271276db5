@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+	/*
+	반복문을 활용한 배열 접근
+	- 주로 for문을 사용하여 배열에 차례대로 접근
+	
+	< 기본적인 for문을 사용한 배열 접근 >
+	*/
+	
+	// 배열 fruits 생성 및 "사과", "딸기", "오렌지" 저장 후 출력
+	let fruits = ["사과", "딸기", "오렌지"];
+	
+	document.write(fruits[0] + "<br>");
+	document.write(fruits[1] + "<br>");
+	document.write(fruits[2] + "<br>");
+	
+</script>
+</head>
+<body>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+

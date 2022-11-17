@@ -1,0 +1,43 @@
+package com.itwillbs.test2.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+@Controller
+public class BoardController {
+	
+	@RequestMapping(value = "/write.bo", method = RequestMethod.GET)
+	public String write() {
+		return "write_form";
+	}
+	
+	// write_form.jsp 페이지에서 POST 방식 요청 수행 시 처리
+	// => 요청 주소가 위의 주소와 동일하나 요청 방식(메서드)이 다르게 매핑됨
+	// => 만약, 메서드명도 동일하게 정의하는 경우 오버로딩 활용
+	@RequestMapping(value = "/write.bo", method = RequestMethod.POST)
+	public String write(String name, String passwd, String subject, String content) {
+		// 주의! POST 방식 요청에 대한 처리 시 한글 파라미터가 깨짐
+		// => JSP 에서는 request.setCharacterEncoding("UTF-8") 메서드를 통해 인코딩 처리했으나
+		//    스프링에서는 자동 주입되는 시점에 한글이 이미 깨져있는 상태가 됨
+		// => 따라서, web.xml 파일에서 POST 방식 요청에 대한 인코딩 필터 설정을 해야함
+		System.out.println("이름 : " + name);
+		System.out.println("패스워드 : " + passwd);
+		System.out.println("제목 : " + subject);
+		System.out.println("내용 : " + content);
+		
+		// "list.bo" 서블릿 요청 => 리다이렉트 방식으로 요청
+		return "write_form";
+	}
+	
+}
+
+
+
+
+
+
+
+
+
+
